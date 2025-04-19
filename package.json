@@ -1,0 +1,13 @@
+{
+  "name": "tracking-link-generator",
+  "version": "1.0.0",
+  "description": "A website to create tracking links that show visitor IP addresses",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nanoid": "^4.0.0"
+  }
+}
