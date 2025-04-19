@@ -11,13 +11,18 @@ const trackingLinks = new Map();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint to create a new tracking link with optional label
+// Endpoint to create a new tracking link with optional label and error handling
 app.post('/create-link', (req, res) => {
-  const id = nanoid(10);
-  const label = req.body.label || 'No label provided';
-  trackingLinks.set(id, { createdAt: new Date(), label });
-  const trackingUrl = req.protocol + '://' + req.get('host') + '/track/' + id;
-  res.json({ trackingUrl });
+  try {
+    const id = nanoid(10);
+    const label = req.body.label || 'No label provided';
+    trackingLinks.set(id, { createdAt: new Date(), label });
+    const trackingUrl = req.protocol + '://' + req.get('host') + '/track/' + id;
+    res.json({ trackingUrl });
+  } catch (error) {
+    console.error('Error creating tracking link:', error);
+    res.status(500).json({ error: 'Failed to create tracking link' });
+  }
 });
 
 // Tracking endpoint to capture and display visitor IP and label
